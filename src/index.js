@@ -1,12 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOM from "react-dom";
+import {applyMiddleware, compose, createStore} from 'redux';
+import reducers from "./state/reducers";
+import thunk from "redux-thunk";
+import Form from "./components/Form/Form";
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const composeEnhancers =
+    typeof window === 'object' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+            // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+        }) : compose;
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const enhancer = composeEnhancers(
+    applyMiddleware(thunk),
+);
+
+const store = createStore(reducers, enhancer);
+
+const App = () => {
+    return (
+        <div className="main-content">
+            <Form/>
+        </div>
+    );
+};
+
+ReactDOM.render(<App/>, document.getElementById('root'));
