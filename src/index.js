@@ -5,6 +5,7 @@ import reducers from "./state/reducers";
 import thunk from "redux-thunk";
 import Form from "./components/Form/Form";
 import './index.css';
+import SignUpForm from "./components/SignUpForm/SignUpForm";
 
 const composeEnhancers =
     typeof window === 'object' &&
@@ -22,7 +23,7 @@ const store = createStore(reducers, enhancer);
 const App = () => {
     return (
         <div className="main-content">
-            <Form/>
+            <SignUpForm/>
         </div>
     );
 };

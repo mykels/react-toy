@@ -1,70 +1,109 @@
 import React, {useState} from "react";
-import "./Form.css";
+import "./Form.scss";
 import Field from "./Field/Field";
 
-const initialForm = {
-    fields: {
-        email: {
-            value: '',
-            touched: false,
-            dirty: false,
-            valid: false,
-            validating: false
-        },
-        username: {
-            value: '',
-            touched: false,
-            dirty: false,
-            validating: false,
-            valid: false
-        },
-        password: {
-            value: '',
-            touched: false,
-            dirty: false,
-            validating: false,
-            valid: false
-        }
-    }
+const validateAsynchronously = (value, asyncValidator) => {
+    return new Promise((resolve, reject) => {
+
+        clearTimeout(asyncValidator.debouncedJob);
+
+        asyncValidator.debouncedJob = setTimeout(() => {
+            asyncValidator.validator(value, resolve, reject);
+        }, asyncValidator.debounceTime);
+
+    });
 };
 
-const Form = () => {
-    const [form, setForm] = useState(initialForm);
+const buildField = (field) => {
+    const {meta} = field;
 
-    const passwordValidator = (password) => {
-        if (password.length > 6) {
-            return {valid: true};
-        }
-
-        return {valid: false, error: 'Password is too short'};
+    field.meta = {
+        ...meta,
+        touched: false,
+        dirty: false,
+        valid: false,
+        validating: false
     };
 
-    const onPasswordChange = (event) => {
-        const {value} = form.fields.password;
+    return field;
+};
+
+const buildForm = (fields) => {
+    return {
+        fields: fields.map(buildField),
+        meta: {
+            valid: false
+        }
+    };
+};
+
+const Form = (props) => {
+    const [form, setForm] = useState(buildForm(props.fields));
+
+    const onFieldChange = async (event, field) => {
+        const {value} = field.input;
+        const {validators, asyncValidator} = field.meta;
         const newValue = event.target.value;
         const dirty = value !== newValue;
-        const {valid, error} = passwordValidator(newValue);
-        const password = {...password, dirty, valid, error};
-        const newForm = {...form, fields: {...form.fields, password}};
-        setForm(newForm);
+
+        if (dirty) {
+            const newField = {...field, input: {...field.input, value: newValue}};
+            const newFields = form.fields.map((oldField) => oldField.input.id === field.input.id ? newField : oldField);
+            const newForm = {...form, fields: newFields};
+            setForm(newForm);
+        }
+
+        if (validators) {
+            for (const validator of validators) {
+                const {valid, error} = validator(newValue);
+
+                if (!valid) {
+                    const newField = {
+                        ...field,
+                        input: {...field.input, value: newValue},
+                        meta: {...field.meta, dirty, valid, error}
+                    };
+                    const newFields = form.fields.map((oldField) => oldField.input.id === field.input.id ? newField : oldField);
+                    const newForm = {...form, fields: newFields};
+                    setForm(newForm);
+                    return;
+                }
+            }
+        }
+
+        if (asyncValidator) {
+            let newField = {
+                ...field,
+                input: {...field.input, value: newValue},
+                meta: {...field.meta, dirty, valid: false, loading: true, error: undefined}
+            };
+            let newFields = form.fields.map((oldField) => oldField.input.id === field.input.id ? newField : oldField);
+            let newForm = {...form, fields: newFields};
+            setForm(newForm);
+
+            const {valid, error} = await validateAsynchronously(newValue, asyncValidator);
+
+            newField = {
+                ...field,
+                input: {...field.input, value: newValue},
+                meta: {...field.meta, dirty, valid, loading: false, error}
+            };
+            newFields = form.fields.map((oldField) => oldField.input.id === field.input.id ? newField : oldField);
+            newForm = {...form, fields: newFields};
+            setForm(newForm);
+        }
     };
 
     const submit = (event) => {
         event.preventDefault();
-        // const valid = validateForm();
-        // console.log(getData());
     };
 
     return (
         <form className="form-container" noValidate="novalidate" onSubmit={submit}>
-            <Field type="email" id="email" placeholder="Enter email"
-                   field={form.fields.email}/>
-            <Field type="text" id="username" placeholder="Enter username"
-                   field={form.fields.username}/>
-            <Field type="password" id="password" autoComplete="new-password"
-                   field={form.fields.password}
-                   onChange={onPasswordChange}
-                   placeholder="Enter password"/>
+            {form.fields.map((field) => (
+                <Field key={field.input.id} input={field.input} meta={field.meta}
+                       onChange={(event) => onFieldChange(event, field)}/>
+            ))}
 
             <div className='submit-section'>
                 <button type="submit" className="btn btn-primary submit-button">
