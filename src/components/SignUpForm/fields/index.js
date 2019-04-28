@@ -7,11 +7,11 @@ const requiredValidator = (password) => {
     return {valid: false, error: 'Password is too short'};
 };
 
-const passwordStrengthValidator = (password, resolve, reject) => {
+const passwordStrengthValidator = (password, next) => {
     console.log("checking password strength...", Date.now());
 
     setTimeout(() => {
-        resolve(password.length >= 5 ? {valid: true} : {valid: false, error: "password is too weak"});
+        next(password.length >= 5 ? {valid: true} : {valid: false, error: "password is too weak"});
     }, 2000);
 };
 
@@ -51,7 +51,7 @@ const password = {
         validators: [requiredValidator],
         asyncValidator: {
             validator: passwordStrengthValidator,
-            debounceTime: 500
+            debounceTime: 4000
         }
     }
 };

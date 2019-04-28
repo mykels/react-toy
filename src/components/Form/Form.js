@@ -105,7 +105,7 @@ const Form = (props) => {
                        onChange={(event) => onFieldChange(event, field)}/>
             ))}
 
-            <div className='submit-section'>
+            <div className='submit-container'>
                 <button type="submit" className="btn btn-primary submit-button">
                     Submit
                 </button>

@@ -1,0 +1,35 @@
+.form-container {
+
+}
+
+.form-container > * {
+  margin: 10px;
+}
+
+.submit-container {
+  & > .submit-button {
+    background-color: #1dbf73;
+    border: 1px solid #1da660;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    &:disabled {
+      background-color: #D6D6D6;
+      border: 1px solid #808080;
+      text-decoration: none;
+      box-shadow: none;
+    }
+
+    &:disabled:hover {
+      background-color: #D6D6D6;
+      border: 1px solid #b4b4b4;
+    }
+  }
+
+  & > .submit-button:hover {
+    background-color: #20d17e;
+    border: 1px solid #1dbf73;
+  }
+}

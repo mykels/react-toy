@@ -3,9 +3,8 @@ import * as ReactDOM from "react-dom";
 import {applyMiddleware, compose, createStore} from 'redux';
 import reducers from "./state/reducers";
 import thunk from "redux-thunk";
-import Form from "./components/Form/Form";
 import './index.css';
-import SignUpForm from "./components/SignUpForm/SignUpForm";
+import HookSignUpForm from "./components/HookSignUpForm/HookSignUpForm";
 
 const composeEnhancers =
     typeof window === 'object' &&
@@ -23,7 +22,7 @@ const store = createStore(reducers, enhancer);
 const App = () => {
     return (
         <div className="main-content">
-            <SignUpForm/>
+            <HookSignUpForm/>
         </div>
     );
 };
