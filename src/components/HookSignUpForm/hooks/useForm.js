@@ -87,7 +87,7 @@ const useForm = (onSubmit, fieldValues) => {
         const validatedField = validateField(validators, newField, name);
         if (!fieldValid(validatedField)) {
             if (asyncValidator) {
-                // TODO: make prettier (extract)  
+                // TODO: make prettier (extract)
                 cancelJob(asyncValidator);
                 asyncValidator.executionValue = undefined;
                 const newField = setFieldMeta(validatedField, name, {loading: false});

@@ -1,0 +1,31 @@
+.google-social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px solid #E4E5E7;
+    border-radius: 4px;
+    padding: 12px 0;
+    width: 100%;
+}
+
+.google-social-button:hover {
+    background: #f7f7f7;
+    text-decoration: none;
+}
+
+.google-icon {
+    position: absolute;
+    left: 16px;
+    width: 18px;
+    height: 18px;
+    background: url(google.svg);
+    background-size: 18px;
+}
+
+.google-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #7A7D85;
+    margin: 0;
+}

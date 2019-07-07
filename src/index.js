@@ -1,10 +1,12 @@
 import React from 'react';
 import * as ReactDOM from "react-dom";
 import {applyMiddleware, compose, createStore} from 'redux';
-import reducers from "./state/reducers";
 import thunk from "redux-thunk";
+
 import './index.css';
-import HookSignUpForm from "./components/HookSignUpForm/HookSignUpForm";
+import {Provider} from "react-redux";
+import reducers from "./TodosApp/state/reducers";
+import {SocialButtons} from "./SocialApp/components/SocialButtons/SocialButtons";
 
 const composeEnhancers =
     typeof window === 'object' &&
@@ -22,7 +24,9 @@ const store = createStore(reducers, enhancer);
 const App = () => {
     return (
         <div className="main-content">
-            <HookSignUpForm/>
+            <Provider store={store}>
+                <SocialButtons/>
+            </Provider>
         </div>
     );
 };

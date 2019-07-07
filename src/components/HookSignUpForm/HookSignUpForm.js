@@ -4,6 +4,8 @@ import useForm from "./hooks/useForm";
 import fieldValues from "./fields/fields";
 import {Form} from "./Form";
 
+import "./index.css";
+
 const HookSignUpForm = () => {
     const onSubmit = () => {
         return new Promise((resolve) => {
