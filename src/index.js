@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import './index.css';
 import {Provider} from "react-redux";
 import reducers from "./TodosApp/state/reducers";
-import {SocialButtons} from "./SocialApp/components/SocialButtons/SocialButtons";
+import HookSignUpForm from "./components/HookSignUpForm/HookSignUpForm";
 
 const composeEnhancers =
     typeof window === 'object' &&
@@ -25,7 +25,7 @@ const App = () => {
     return (
         <div className="main-content">
             <Provider store={store}>
-                <SocialButtons/>
+                <HookSignUpForm/>
             </Provider>
         </div>
     );
