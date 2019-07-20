@@ -1,9 +1,12 @@
 import React from "react";
 import Field from "./Field/Field";
-import useForm from "./hooks/useForm";
 import {Form} from "./Form";
+import {SignUpValidator} from "./validator";
+import useForm from "../../utils/hooks/useForm";
 
 import "./index.css";
+
+const signUpValidator = new SignUpValidator();
 
 const HookSignUpForm = () => {
     const onSubmit = (fields) => {
@@ -25,7 +28,7 @@ const HookSignUpForm = () => {
         onFieldChange,
         setFieldErrors,
         onSubmission
-    } = useForm(onSubmit, ["email", "username", "password"]);
+    } = useForm(onSubmit, ["email", "username", "password"], signUpValidator);
 
     return (
         <Form submitText='Continue' onSubmit={onSubmission} {...meta}>

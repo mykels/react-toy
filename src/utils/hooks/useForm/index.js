@@ -1,7 +1,6 @@
 import {useState} from "react";
-import {validateField, validateFields} from "../validations";
 
-const validationTasks = {};
+const activeValidations = {};
 
 const enrichFields = (fieldsDef) => {
     const fields = {};
@@ -19,7 +18,7 @@ const enrichFields = (fieldsDef) => {
     return fields;
 };
 
-const useForm = (onSubmit, fieldsDef) => {
+const useForm = (onSubmit, fieldsDef, validator) => {
     const [fields, setFields] = useState(enrichFields(fieldsDef));
     const [meta, setMeta] = useState({submitting: false});
 
@@ -39,20 +38,20 @@ const useForm = (onSubmit, fieldsDef) => {
     const handleFieldValidation = ({name, value}) => {
         cancelPreviousValidation(name);
 
-        const {cancel} = validateField({[name]: value})
-            .done((result) => handleFieldValidationResult(name, result));
+        const {cancel} = validator.validateField({[name]: value})
+            .done((result) => handleValidationResult(name, result));
 
-        validationTasks[name] = cancel;
+        activeValidations[name] = cancel;
     };
 
     const cancelPreviousValidation = (name) => {
-        const validationTask   = validationTasks[name];
+        const validationTask = activeValidations[name];
         validationTask && validationTask();
 
-        delete validationTasks[name];
+        delete activeValidations[name];
     };
 
-    const handleFieldValidationResult = (name, {hasErrors, getErrors}) => {
+    const handleValidationResult = (name, {hasErrors, getErrors}) => {
         const valid = !hasErrors(name);
         const errors = getErrors(name);
 
@@ -63,7 +62,7 @@ const useForm = (onSubmit, fieldsDef) => {
             }
         }));
 
-        validationTasks[name] = undefined;
+        activeValidations[name] = undefined;
     };
 
     const setFieldErrors = (fieldErrors) => {
@@ -92,7 +91,7 @@ const useForm = (onSubmit, fieldsDef) => {
 
     const validateBeforeSubmission = () => {
         const fieldValues = getFieldValues(fields);
-        const {hasErrors, getErrors} = validateFields(fieldValues);
+        const {hasErrors, getErrors} = validator.validateFields(fieldValues);
         const validatedFields = {};
 
         for (const name in fields) {
