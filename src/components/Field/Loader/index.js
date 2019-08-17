@@ -1,5 +1,6 @@
 import React from "react";
-import "./Loader.scss";
+
+import "./style.scss";
 
 const Loader = () => <div className='circle-loader'/>;
 

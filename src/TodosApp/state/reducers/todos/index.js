@@ -15,7 +15,7 @@ export const todosReducer = (state = INITIAL_TODOS, action) => {
 
 const toggleTodo = (todos, toggledTodo) => {
     return todos.map((todo) => {
-        return todo.index === toggledTodo.index ?
+        return todo.style === toggledTodo.style ?
             {...todo, checked: !todo.checked} :
             todo
     });

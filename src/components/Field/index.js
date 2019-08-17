@@ -1,7 +1,8 @@
 import React from "react";
-import "./Field.scss";
-import Loader from "./Loader/Loader";
-import FieldErrors from "./FieldErrors/FieldErrors";
+import Loader from "./Loader";
+import FieldErrors from "./FieldErrors";
+
+import "./style.scss";
 
 const Field = ({dirty, valid, loading, errors, ...inputProps}) => {
     const validationClass = dirty ? `is-${valid ? 'valid' : 'invalid'}` : '';

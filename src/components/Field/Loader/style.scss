@@ -1,0 +1,21 @@
+$brand-success: #5cb85c;
+$loader-size: 2em;
+$check-color: $brand-success;
+
+.circle-loader {
+  border: 1px solid #e2e2e2;
+  border-bottom-color: $check-color;
+  animation: loader-spin 1s infinite linear;
+  border-radius: 50%;
+  width: $loader-size;
+  height: $loader-size;
+}
+
+@keyframes loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

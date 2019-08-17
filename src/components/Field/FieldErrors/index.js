@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./FieldErrors.scss";
+import "./style.scss";
 
 const FieldErrors = ({errors}) => {
     return (

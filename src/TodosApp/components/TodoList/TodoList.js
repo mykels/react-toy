@@ -7,7 +7,7 @@ export const TodoList = ({todos, onToggle}) => {
     return (
         <div className="todo-list">
             {todos.map((todo) =>
-                <Todo key={todo.index} todo={todo} onToggle={onToggle}/>
+                <Todo key={todo.style} todo={todo} onToggle={onToggle}/>
                 )
             }
         </div>

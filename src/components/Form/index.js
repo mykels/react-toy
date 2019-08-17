@@ -1,8 +1,9 @@
 import React from "react";
-import './index.scss';
-import Loader from "../Field/Loader/Loader";
+import Index from "../Field/Loader";
 
-export const Form = ({children, submitText, submitting, ...formProps}) => {
+import './style.scss';
+
+const Form = ({children, submissionTitle, submitting, ...formProps}) => {
 
     return <form className="form-container" noValidate="novalidate" {...formProps}>
         {children}
@@ -11,8 +12,10 @@ export const Form = ({children, submitText, submitting, ...formProps}) => {
             <button type="submit"
                     className='btn btn-primary submit-button'
                     disabled={submitting}>
-                {submitting ? <Loader/> : <span>{submitText}</span>}
+                {submitting ? <Index/> : <span>{submissionTitle}</span>}
             </button>
         </div>
     </form>;
 };
+
+export default Form;

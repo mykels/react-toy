@@ -6,6 +6,9 @@
     "antd": "^3.16.3",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "eslint-plugin-jest": "^22.15.1",
     "faker": "^4.1.0",
     "jquery": "^3.4.0",
     "lodash": "^4.17.15",
@@ -13,8 +16,9 @@
     "passable": "^7.1.1",
     "popper": "^1.0.1",
     "popper.js": "^1.15.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-facebook-login": "^4.1.1",
     "react-redux": "^7.1.0",
     "react-scripts": "2.1.5",
     "redux": "^4.0.1",
@@ -36,5 +40,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "react-app-rewire-multiple-entry": "^1.0.1",
+    "react-app-rewired": "^2.1.3"
+  }
 }
